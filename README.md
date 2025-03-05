@@ -7,7 +7,7 @@
 1. Убедитесь, что у вас установлены Docker и Docker Compose.
 2. Клонируйте репозиторий:  
    git clone https://github.com/Valeriy-Krivosheev/Socket-Chat.git  
-   cd websocket-chat  
+   cd Socket-Chat  
 
 3. Запустите приложение:
 
