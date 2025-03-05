@@ -1,0 +1,17 @@
+
+services:
+  frontend:
+    build:
+      context: ./frontend/.
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"  # Порт 80 контейнера -> порт 8080 на хосте
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend/.
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Порт 3000 контейнера -> порт 3000 на хосте

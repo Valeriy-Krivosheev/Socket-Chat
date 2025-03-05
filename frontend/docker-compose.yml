@@ -1,0 +1,8 @@
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"  # Порт 80 контейнера -> порт 8080 на хосте
