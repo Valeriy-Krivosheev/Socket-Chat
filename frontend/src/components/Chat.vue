@@ -21,7 +21,7 @@ import type { Ref } from 'vue'
 
 const socket = io('http://localhost:3000')
 const messages: Ref<IMessage[]> = ref([])
-
+// если name from localstorage === user.name
 const messageSend = (text: string) => {
   const msg: IMessage = {
     text,
@@ -36,13 +36,17 @@ const scrollToBottom = (elem: Ref<HTMLElement | null>) => {
   }
 }
 
-onMounted(() => {
+const receivedNewMsg = (): void => {
   socket.on('newMessage', (message: IMessage) => {
     messages.value.push(message)
     nextTick(() => {
       scrollToBottom(chatContainer)
     })
   })
+}
+
+onMounted(() => {
+  receivedNewMsg()
 })
 </script>
 
