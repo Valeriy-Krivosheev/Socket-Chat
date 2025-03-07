@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="sendMessage">
-    <label for="chat" class="sr-only">Your message</label>
     <div class="flex items-center px-3 py-2 rounded-lg">
       <textarea
         v-model="newMessage"
@@ -33,16 +32,23 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useUser } from '@/composables/useUser.ts'
+import type { IMessage } from '@/type.ts'
+
+const { user } = useUser()
 
 const emit = defineEmits<{
-  (e: 'sendMessage', message: string): void
+  (e: 'sendMessage', message: IMessage): void
 }>()
 
 const newMessage = ref('')
 
 const sendMessage = () => {
   if (newMessage.value.trim()) {
-    emit('sendMessage', newMessage.value.trim())
+    emit('sendMessage', {
+      user: user.value,
+      text: newMessage.value.trim(),
+    })
     newMessage.value = ''
   }
 }
