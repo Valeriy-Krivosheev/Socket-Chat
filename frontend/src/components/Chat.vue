@@ -20,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+
+//test comment
 import ChatMessageList from '@/components/ChatMessageList.vue'
 import ChatForm from '@/components/ChatForm.vue'
 import { ref, onMounted, nextTick, computed } from 'vue'
