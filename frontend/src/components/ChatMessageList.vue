@@ -5,7 +5,7 @@
       <div class="flex flex-col gap-1 w-full max-w-[320px]">
         <div class="flex items-center space-x-2 rtl:space-x-reverse">
           <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-            message.user
+            message.user.name
           }}</span>
           <span class="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
         </div>
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import type { IMessage } from '@/type.js'
 import { type PropType } from 'vue'
-
+// если name from localstorage === user.name
 defineProps({
   messages: {
     type: Array as PropType<IMessage[]>,
