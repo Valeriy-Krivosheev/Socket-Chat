@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useUser } from '@/composables/useUser.ts'
+import useUser from '@/composables/useUser'
 import type { IMessage } from '@/type.ts'
 
 const { user } = useUser()
@@ -44,10 +44,14 @@ const emit = defineEmits<{
 const newMessage = ref('')
 
 const sendMessage = () => {
-  if (newMessage.value.trim()) {
+  if (newMessage.value.trim() && user.value) {
     emit('sendMessage', {
       user: user.value,
-      text: newMessage.value.trim(),
+      content: {
+        text: newMessage.value.trim(),
+        time: Date.now(),
+      },
+      type: 'message',
     })
     newMessage.value = ''
   }

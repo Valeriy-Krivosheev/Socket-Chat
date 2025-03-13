@@ -3,17 +3,17 @@ import Chat from '@/components/Chat.vue'
 import IntroduceModal from '@/components/IntroduceModal.vue'
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
-import { useUser } from '@/composables/useUser.ts'
+import useUser from '@/composables/useUser'
+import type { IUserCreated } from '@/type'
 
 const { user, saveUser } = useUser()
 
 onMounted(() => {
   initFlowbite()
 })
-const addUser = (newUser) => {
+const addUser = (newUser: IUserCreated) => {
   saveUser(newUser)
 }
-//new test comment for commit
 </script>
 
 <template>

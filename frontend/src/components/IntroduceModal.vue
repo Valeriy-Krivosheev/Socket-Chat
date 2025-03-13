@@ -46,6 +46,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 import type { IUserCreated } from '@/type.ts'
 
 const emit = defineEmits<{
@@ -57,6 +58,7 @@ const newUserName = ref<string>('')
 const addUser = () => {
   if (!newUserName.value.trim()) return
   emit('addUser', {
+    id: uuidv4(),
     name: newUserName.value,
     timeEntering: Date.now(),
   })

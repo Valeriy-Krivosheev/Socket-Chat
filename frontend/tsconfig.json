@@ -1,13 +1,27 @@
 {
-  "files": [],
   "compilerOptions": {
-  },
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+    "baseUrl": ".", // Указывает базовый путь для разрешения модулей
+    "paths": {
+      "@/*": ["src/*"] // Алиас @ для папки src
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+    "target": "ES6",
+    "module": "ESNext",
+    "strict": true, // Включает все строгие проверки
+    "noImplicitAny": true, // Запрещает неявное использование `any`
+    "strictNullChecks": true, // Строгая проверка на null/undefined
+    "strictFunctionTypes": true, // Строгая проверка типов функций
+    "strictPropertyInitialization": true, // Проверка инициализации свойств класса
+    "noUnusedLocals": true, // Ошибка, если есть неиспользуемые переменные
+    "noUnusedParameters": true, // Ошибка, если есть неиспользуемые параметры
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true, // Не генерировать JS-файлы (если используешь Vite или другой бандлер)
+    "jsx": "preserve" // Если используешь JSX
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

@@ -1,10 +1,13 @@
 import { ref, watchEffect } from 'vue'
 import type { IUserCreated } from '@/type.ts'
 
-export function useUser() {
+export default function useUser() {
   const STORAGE_KEY = 'chatUser'
+  const storedUser = localStorage.getItem(STORAGE_KEY)
 
-  const user = ref<IUserCreated>(JSON.parse(localStorage.getItem(STORAGE_KEY)) as IUserCreated)
+  const user = ref<IUserCreated | null>(
+    storedUser ? (JSON.parse(storedUser) as IUserCreated) : null,
+  )
 
   watchEffect(() => {
     if (user.value?.name !== null) {
@@ -21,9 +24,16 @@ export function useUser() {
     user.value = null
   }
 
+  const currentUserCheck = (msgUser: IUserCreated, user: IUserCreated | null) => {
+    isCurrentUser.value = msgUser.id === user?.id
+  }
+  const isCurrentUser = ref(false)
+
   return {
     user,
     saveUser,
     clearUserName,
+    isCurrentUser,
+    currentUserCheck,
   }
 }

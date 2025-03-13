@@ -1,9 +1,14 @@
 export interface IMessage {
   user: IUserCreated
-  text: string
+  content: {
+    text: string
+    time: number
+  }
+  type: 'message' | 'system'
 }
 
 export interface IUserCreated {
-  name: string | null
-  timeEntering: Date | null
+  id: string
+  name: string
+  timeEntering: number
 }
