@@ -36,7 +36,7 @@ import useTime from '@/composables/useTime'
 
 const { user } = useUser()
 
-const socket = io('http://localhost:3000')
+const socket = io('http://localhost:5000')
 const messages: Ref<IMessage[]> = ref([])
 
 const messageSend = (msg: IMessage) => {

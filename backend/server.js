@@ -1,19 +1,29 @@
+require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const bodyParser = require("body-parser");
+const cors = require('cors')
 
 const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 const server = http.createServer(app);
+
 const users = new Map()
+const port = process.env.PORT || 5000;
+const messages = require('./routes/api/messages');
+app.use('/api/messages', messages);
+
 const io = new Server(server, {
     cors: {
         origin: '*', // Разрешить все запросы (для разработки)
     },
 });
 
-io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
 
+
+io.on('connection', (socket) => {
     socket.on('sendMessage', (message) => {
         io.emit('newMessage', message);
     });
@@ -24,7 +34,7 @@ io.on('connection', (socket) => {
             user,
             type:'system',
             content:{
-                text:`${user.name} have joined our chat`,
+                text:`${user.name} has joined our chat`,
                 time: Date.now(),
             }
         });
@@ -44,6 +54,10 @@ io.on('connection', (socket) => {
 
 });
 
-server.listen(3000, () => {
-    console.log('WebSocket server is running on port 3000');
+app.get('/', (req, res) => {
+    res.send('<h1>Hello from backed</h1>');
+});
+
+server.listen(port, () => {
+    console.log('WebSocket server is running on port 5000');
 });
