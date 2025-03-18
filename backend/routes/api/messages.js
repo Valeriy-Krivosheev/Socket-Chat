@@ -1,6 +1,5 @@
-require('dotenv').config();
-const express = require('express');
-import {dbConnent} from "../base";
+import express from "express";
+import dbConnent from '../../base/index.js'
 
 const router = express.Router();
 const usersUri = process.env.MONGO_DB_USERS;
@@ -23,4 +22,4 @@ router.post('/', async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

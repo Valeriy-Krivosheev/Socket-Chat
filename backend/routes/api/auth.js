@@ -1,6 +1,6 @@
-require('dotenv').config();
-const express = require('express');
-const mongodb = require('mongodb');
+
+import express from 'express';
+import {MongoClient} from 'mongodb'
 const router = express.Router();
 
 
@@ -8,4 +8,4 @@ const router = express.Router();
 
 
 
-module.exports = router;
+export default router;

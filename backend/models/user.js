@@ -1,7 +1,6 @@
-import {dbConnent} from "../base";
-
-const {MongoClient} = require('mongodb');
-const bcrypt = require('bcryptjs')
+import dbConnent from 'backend/base'
+import {MongoClient} from 'mongodb'
+import bcrypt from 'bcryptjs'
 
 const authUri = process.env.MONGO_DB_AUTH
 

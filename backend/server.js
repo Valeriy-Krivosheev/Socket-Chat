@@ -1,19 +1,17 @@
-require('dotenv').config();
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const bodyParser = require("body-parser");
-const cors = require('cors')
+import express from 'express';
+import http from 'http';
+import {Server} from 'socket.io';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 const server = http.createServer(app);
 
-// const users = new Map()
 const port = process.env.PORT || 5000;
-const messages = require('./routes/api/messages');
-const auth = require('./routes/api/auth');
+import messages from './routes/api/messages.js'
+import auth from './routes/api/auth.js'
 
 app.use('/api/messages', messages);
 app.use('/api/auth', auth);
@@ -53,7 +51,6 @@ io.on('connection', (socket) => {
         //             time: Date.now(),
         //         }
         //     });
-        //     users.delete(socket.id);
         // }
     });
 

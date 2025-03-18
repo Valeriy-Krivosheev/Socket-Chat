@@ -1,6 +1,7 @@
 import {MongoClient} from "mongodb";
 
-export const dbConnent = async (uri:string,name:string,collection:string)=>{
+
+export default async function dbConnent (uri,name,collection){
     try{
         console.log('Попытка подключения к MongoDB...');
         const client = await MongoClient.connect(uri);
@@ -13,3 +14,4 @@ export const dbConnent = async (uri:string,name:string,collection:string)=>{
     }
 
 }
+
