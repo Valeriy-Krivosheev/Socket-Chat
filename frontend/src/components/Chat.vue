@@ -16,7 +16,7 @@
     <h1 class="text-center text-2xl font-bold mb-4 mt-8">MyChat</h1>
     <div ref="chatContainer" class="h-150 max-h-[calc(100vh-6.25rem)] overflow-auto flex-1">
       <h3 class="text-center text-gray-500 font-medium">Start your chatting with strangers here</h3>
-      <div class="p-2">
+      <div v-if="messages?.length" class="p-2">
         <ChatMessageItem v-for="(message, i) in messages" :message="message" :key="i" />
       </div>
     </div>
@@ -27,20 +27,23 @@
 <script setup lang="ts">
 import ChatMessageItem from '@/components/ChatMessageItem.vue'
 import ChatForm from '@/components/ChatForm.vue'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
 import { io } from 'socket.io-client'
 import type { IMessage } from '@/type.ts'
 import type { Ref } from 'vue'
 import useUser from '@/composables/useUser'
 import useTime from '@/composables/useTime'
+import useAxios from '@/composables/useAxios'
 
 const { user } = useUser()
+const { getMessages, addMessage } = useAxios()
 
 const socket = io('http://localhost:5000')
 const messages: Ref<IMessage[]> = ref([])
 
-const messageSend = (msg: IMessage) => {
+const messageSend = async (msg: IMessage) => {
   socket.emit('sendMessage', msg)
+  await addMessage(msg)
 }
 const chatContainer = ref<HTMLElement | null>(null)
 const scrollToBottom = (elem: Ref<HTMLElement | null>) => {
@@ -52,17 +55,17 @@ const scrollToBottom = (elem: Ref<HTMLElement | null>) => {
 const receivedNewMsg = (): void => {
   socket.on('newMessage', (message: IMessage) => {
     messages.value.push(message)
-
-    nextTick(() => {
-      scrollToBottom(chatContainer)
-    })
   })
 }
 const { localDateWithoutMs } = useTime()
 
-onMounted(() => {
+onMounted(async () => {
   socket.emit('userConnect', user.value)
+  messages.value = await getMessages()
   receivedNewMsg()
+})
+onUpdated(() => {
+  scrollToBottom(chatContainer)
 })
 </script>
 
