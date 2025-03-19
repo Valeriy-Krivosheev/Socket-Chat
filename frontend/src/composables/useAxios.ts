@@ -9,6 +9,7 @@ export default function useAxios() {
       const response = await axios.get(url)
       return response.data
     } catch (error: unknown) {
+      //todo доработать вывод ошибок
       console.error(error)
     }
   }
