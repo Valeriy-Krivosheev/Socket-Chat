@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-[800px] mx-auto rounded-lg bg-gray-100 dark:bg-gray-800 h-full flex flex-col p-4 relative"
+    class="max-w-[800px] min-w-2/5 mx-auto rounded-lg bg-gray-100 dark:bg-gray-800 h-full flex flex-col p-4 relative"
     v-if="user"
   >
     <div class="flex items-center gap-4 absolute right-4 top-4">

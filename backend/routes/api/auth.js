@@ -5,7 +5,7 @@ import {
   createUser,
   comparePassword,
   findUserByName,
-} from "../../models/user.js";
+} from "../../src/models/user.js";
 const router = express.Router();
 const secretKey = process.env.JWT_SECRET_KEY;
 

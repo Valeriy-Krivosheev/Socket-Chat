@@ -1,15 +1,16 @@
 import express from "express";
-import dbConnent from "../../base/index.js";
+import dbConnent from "../../src/base/index.js";
+import checkForToken from "../../src/middleware/auth.js";
 
 const router = express.Router();
 const usersUri = process.env.MONGO_DB_USERS;
 
-router.get("/", async (req, res) => {
+router.get("/", checkForToken, async (req, res) => {
   const messages = await dbConnent(usersUri, "V-Chat", "messages");
   res.send(await messages.find({}).toArray());
 });
 
-router.post("/", async (req, res) => {
+router.post("/", checkForToken, async (req, res) => {
   const messages = await dbConnent(usersUri, "V-Chat", "messages");
   await messages.insertOne({
     user: req.body.user,

@@ -1,4 +1,4 @@
-import dbConnent from "backend/base/index.js";
+import dbConnent from "../base/index.js";
 import bcrypt from "bcryptjs";
 
 const authUri = process.env.MONGO_DB_AUTH;
