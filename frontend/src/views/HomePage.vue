@@ -22,24 +22,28 @@
     </div>
     <ChatForm @sendMessage="messageSend" />
   </div>
+  <h1 v-else>Нет пользователя</h1>
 </template>
 
 <script setup lang="ts">
 import ChatMessageItem from '@/components/ChatMessageItem.vue'
 import ChatForm from '@/components/ChatForm.vue'
+import { useUserStore } from '@/store/user'
 import { ref, onMounted, onUpdated } from 'vue'
 import { io } from 'socket.io-client'
+import { storeToRefs } from 'pinia'
 import type { IMessage } from '@/type.ts'
 import type { Ref } from 'vue'
-import useUser from '@/composables/useUser'
 import useTime from '@/composables/useTime'
 import useAxios from '@/composables/useAxios'
 
-const { user } = useUser()
 const { getMessages, addMessage } = useAxios()
 
 const socket = io('http://localhost:5000')
 const messages: Ref<IMessage[]> = ref([])
+
+const store = useUserStore()
+const { user } = storeToRefs(store)
 
 const messageSend = async (msg: IMessage) => {
   socket.emit('sendMessage', msg)

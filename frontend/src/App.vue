@@ -2,17 +2,10 @@
 import Footer from '@/components/Footer.vue'
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
-import useUser from '@/composables/useUser'
-import type { IUserCreated } from '@/type'
-
-const { saveUser } = useUser()
 
 onMounted(() => {
   initFlowbite()
 })
-const addUser = (newUser: IUserCreated) => {
-  saveUser(newUser)
-}
 </script>
 
 <template>

@@ -32,10 +32,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import useUser from '@/composables/useUser'
 import type { IMessage } from '@/type.ts'
-
-const { user } = useUser()
+import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+const store = useUserStore()
+const { user } = storeToRefs(store)
 
 const emit = defineEmits<{
   (e: 'sendMessage', message: IMessage): void

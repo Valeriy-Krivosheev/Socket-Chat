@@ -12,3 +12,12 @@ export interface IUserCreated {
   name: string
   timeEntering: number
 }
+
+export interface IFormDataReg {
+  login: string
+  password: string
+  repeatPassword?: string
+  isTermsAgreed?: boolean
+}
+
+export type TFormDataAuth = Pick<IFormDataReg, 'login' | 'password'>

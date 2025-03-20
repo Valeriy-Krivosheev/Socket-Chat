@@ -29,7 +29,10 @@ import type { IMessage } from '@/type.ts'
 import { computed, type PropType } from 'vue'
 import { twMerge } from 'tailwind-merge'
 import useTime from '@/composables/useTime'
-import useUser from '@/composables/useUser'
+import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+const store = useUserStore()
+const { user } = storeToRefs(store)
 
 const props = defineProps({
   message: {
@@ -38,7 +41,6 @@ const props = defineProps({
   },
 })
 const { localDateWithoutMs } = useTime()
-const { user } = useUser()
 
 const isCurrentUser = computed(() => {
   return props.message.user.id === user.value?.id
