@@ -6,7 +6,7 @@
     <div class="flex items-center gap-4 absolute right-4 top-4">
       <img class="w-8 h-8 rounded-full" src="/img/ava.jpeg" alt="" />
       <div class="font-medium dark:text-white">
-        <div class="text-sm">{{ user.name }}</div>
+        <div class="text-sm">{{ user.username }}</div>
         <div class="text-xs text-gray-500 dark:text-gray-400">
           Joined {{ localDateWithoutMs(user.timeEntering) }}
         </div>

@@ -7,7 +7,6 @@ import {
   findUserByName,
 } from "../../src/models/user.js";
 const router = express.Router();
-const secretKey = process.env.JWT_SECRET_KEY;
 
 router.post("/register", async (req, res) => {
   try {
@@ -32,7 +31,13 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { userId: user._id.toLocaleString() },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "10h",
+      },
+    );
     res.json({ token });
   } catch (err) {
     res.status(500).json({ message: "Error logging user", err });
