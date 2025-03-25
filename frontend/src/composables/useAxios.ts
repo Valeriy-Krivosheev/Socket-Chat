@@ -8,7 +8,7 @@ export default function useAxios() {
     try {
       const response = await axios.get(msg, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('chat-token')}`,
         },
       })
       return response.data

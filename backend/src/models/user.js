@@ -1,5 +1,6 @@
 import dbConnent from "../base/index.js";
 import bcrypt from "bcryptjs";
+import { ObjectId } from "mongodb";
 
 export const createUser = async (username, password) => {
   const users = await dbConnent(
@@ -19,7 +20,15 @@ export const findUserByName = async (username) => {
     "vChat-auth",
     "users",
   );
-  return users.findOne({ username });
+  return await users.findOne({ username });
+};
+export const findUserById = async (userId) => {
+  const users = await dbConnent(
+    process.env.MONGO_DB_AUTH,
+    "vChat-auth",
+    "users",
+  );
+  return await users.findOne({ _id: new ObjectId(userId) });
 };
 
 export const comparePassword = async (password, hashedPassword) => {

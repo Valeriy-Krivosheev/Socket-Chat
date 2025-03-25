@@ -28,8 +28,6 @@ export const useUserStore = defineStore('user', () => {
           Authorization: `Bearer ${token.value}`,
         },
       })
-      console.log(2)
-      console.log(response.data)
       setUser(response.data.user)
       isAuthenticated.value = true
     } catch (error) {

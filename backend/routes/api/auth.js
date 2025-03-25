@@ -1,12 +1,12 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-
 import {
   createUser,
   comparePassword,
   findUserByName,
+  findUserById,
 } from "../../src/models/user.js";
-import checkForToken from "../../src/middleware/auth.js";
+import { authMiddleware } from "../../src/middleware/auth.js";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -25,6 +25,7 @@ router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await findUserByName(username);
+
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
@@ -45,9 +46,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/me", checkForToken, async (req, res) => {
+router.get("/me", authMiddleware, async (req, res) => {
   try {
-    const user = await findUserByName(req.user.username);
+    const user = await findUserById(req.user.userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

@@ -1,6 +1,6 @@
 import express from "express";
 import dbConnent from "../../src/base/index.js";
-import checkForToken from "../../src/middleware/auth.js";
+import { checkForToken } from "../../src/middleware/auth.js";
 
 const router = express.Router();
 router.get("/", checkForToken, async (req, res) => {
