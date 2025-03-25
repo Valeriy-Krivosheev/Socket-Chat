@@ -64,6 +64,15 @@
       <template v-if="type === 'registration'">Register new account</template>
       <template v-else>Log in</template>
     </button>
+
+    <p v-if="type === 'auth'" class="my-3">
+      Don't have an account?
+      <router-link class="underline" :to="{ name: 'register' }">Sign up</router-link>
+    </p>
+    <p v-if="type === 'registration'" class="my-3">
+      Already got an account?
+      <router-link class="underline" :to="{ name: 'auth' }">Sign in</router-link>
+    </p>
   </form>
 </template>
 
@@ -102,7 +111,7 @@ const onSubmit = () => {
 
 const isRepeatedPasswordCorrent = computed(() => {
   if (props.type === 'registration') {
-    return formData.value.password === formData.value.repeatPassword
+    return formData.value.password === formData.value.repeatPassword && formData.value.isTermsAgreed
   }
   return true
 })

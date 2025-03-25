@@ -9,6 +9,9 @@
 import AuthRegisterForm from '@/components/AuthRegisterForm.vue'
 import type { IFormDataReg } from '@/type'
 import axios from 'axios'
+import { useUserStore } from '@/store/user'
+import router from '@/router'
+const store = useUserStore()
 
 const onAuth = async (data: IFormDataReg) => {
   try {
@@ -16,8 +19,9 @@ const onAuth = async (data: IFormDataReg) => {
       username: data.login,
       password: data.password,
     })
-    localStorage.setItem('token', response.data.token)
-    console.log('User logged in:', response.data)
+
+    store.setToken(response.data.token)
+    await router.push({ name: 'home' })
   } catch (error) {
     console.error('Error logging in:', error)
   }

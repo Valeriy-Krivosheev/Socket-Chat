@@ -2,9 +2,13 @@
 import Footer from '@/components/Footer.vue'
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
+import { useUserStore } from '@/store/user'
 
-onMounted(() => {
+const store = useUserStore()
+
+onMounted(async () => {
   initFlowbite()
+  await store.checkAuth()
 })
 </script>
 

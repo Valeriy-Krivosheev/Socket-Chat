@@ -6,6 +6,7 @@ import {
   comparePassword,
   findUserByName,
 } from "../../src/models/user.js";
+import checkForToken from "../../src/middleware/auth.js";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -39,6 +40,18 @@ router.post("/login", async (req, res) => {
       },
     );
     res.json({ token });
+  } catch (err) {
+    res.status(500).json({ message: "Error logging user", err });
+  }
+});
+
+router.get("/me", checkForToken, async (req, res) => {
+  try {
+    const user = await findUserByName(req.user.username);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ user });
   } catch (err) {
     res.status(500).json({ message: "Error logging user", err });
   }

@@ -8,8 +8,8 @@
 2. Клонируйте репозиторий:  
    git clone https://github.com/Valeriy-Krivosheev/Socket-Chat.git  
    cd Socket-Chat  
-
-3. Запустите приложение:
+3. Запросите файл .evn
+4. Запустите приложение:
 
 docker-compose up -d --build  
 Откройте браузер и перейдите по адресу: http://localhost:8080.

@@ -8,6 +8,9 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomePage,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: '/auth',
@@ -26,4 +29,12 @@ const router = createRouter({
   routes,
 })
 
+router.beforeEach((to, _, next) => {
+  const token = localStorage.getItem('chat-token')
+  if (to.meta.auth && !token) {
+    next('/auth')
+  } else {
+    next()
+  }
+})
 export default router
