@@ -2,14 +2,14 @@ import dbConnent from "../base/index.js";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "mongodb";
 
-export const createUser = async (username, password) => {
+export const createUser = async (username, password, timeEntering) => {
   const users = await dbConnent(
     process.env.MONGO_DB_AUTH,
     "vChat-auth",
     "users",
   );
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = { username, password: hashedPassword };
+  const user = { username, password: hashedPassword, timeEntering };
   await users.insertOne(user);
   return user;
 };

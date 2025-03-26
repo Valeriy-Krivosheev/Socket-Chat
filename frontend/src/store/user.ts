@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { IUserCreated } from '@/type'
-import axios from 'axios'
+import axios from '@/axios'
 
 export const useUserStore = defineStore('user', () => {
   const userStore = ref()
@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', () => {
       return
     }
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/me', {
+      const response = await axios.get('auth/me', {
         headers: {
           Authorization: `Bearer ${token.value}`,
         },

@@ -29,25 +29,24 @@
 import ChatMessageItem from '@/components/ChatMessageItem.vue'
 import ChatForm from '@/components/ChatForm.vue'
 import { useUserStore } from '@/store/user'
+import { useMessageStore } from '@/store/messages'
 import { ref, onMounted, onUpdated } from 'vue'
 import { io } from 'socket.io-client'
 import { storeToRefs } from 'pinia'
 import type { IMessage } from '@/type.ts'
 import type { Ref } from 'vue'
 import useTime from '@/composables/useTime'
-import useAxios from '@/composables/useAxios'
-
-const { getMessages, addMessage } = useAxios()
 
 const socket = io('http://localhost:5000')
-const messages: Ref<IMessage[]> = ref([])
 
-const store = useUserStore()
-const { user } = storeToRefs(store)
+const userStore = useUserStore()
+const messageStore = useMessageStore()
+const { user } = storeToRefs(userStore)
+const { messages } = storeToRefs(messageStore)
 
 const messageSend = async (msg: IMessage) => {
   socket.emit('sendMessage', msg)
-  await addMessage(msg)
+  await messageStore.postMessages(msg)
 }
 const chatContainer = ref<HTMLElement | null>(null)
 const scrollToBottom = (elem: Ref<HTMLElement | null>) => {
@@ -58,14 +57,15 @@ const scrollToBottom = (elem: Ref<HTMLElement | null>) => {
 
 const receivedNewMsg = (): void => {
   socket.on('newMessage', (message: IMessage) => {
-    messages.value.push(message)
+    messageStore.addMessage(message)
   })
 }
 const { localDateWithoutMs } = useTime()
 
 onMounted(async () => {
+  await userStore.checkAuth()
   socket.emit('userConnect', user.value)
-  messages.value = await getMessages()
+  await messageStore.getMessages()
   receivedNewMsg()
 })
 onUpdated(() => {

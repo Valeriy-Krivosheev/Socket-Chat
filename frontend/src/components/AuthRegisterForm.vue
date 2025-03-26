@@ -38,6 +38,14 @@
         class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light"
         required
       />
+      <span v-if="!isMinPasswordLength" class="text-red-500 text-sm"
+        >The password must contain at least 6 characters.</span
+      >
+      <span
+        v-if="!isRepeatedPasswordCorrent && formData.repeatPassword?.length"
+        class="text-red-500 text-sm block my-2"
+        >Passwords don't match</span
+      >
     </div>
     <div v-if="type === 'registration'" class="flex items-start mb-5">
       <div class="flex items-center h-5">
@@ -111,13 +119,22 @@ const onSubmit = () => {
 
 const isRepeatedPasswordCorrent = computed(() => {
   if (props.type === 'registration') {
-    return formData.value.password === formData.value.repeatPassword && formData.value.isTermsAgreed
+    return formData.value.password === formData.value.repeatPassword
   }
   return true
 })
+const isMinPasswordLength = computed(() => formData.value.password.length > 5)
 
 const isSubmitDisabled = computed(() => {
-  return !isRepeatedPasswordCorrent.value && !formData.value.isTermsAgreed
+  if (props.type === 'registration') {
+    return (
+      !isRepeatedPasswordCorrent.value ||
+      !formData.value.isTermsAgreed ||
+      !isMinPasswordLength.value
+    )
+  } else {
+    return !isMinPasswordLength.value
+  }
 })
 </script>
 
