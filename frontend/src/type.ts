@@ -22,3 +22,8 @@ export interface IFormDataReg {
 }
 
 export type TFormDataAuth = Pick<IFormDataReg, 'login' | 'password'>
+
+export interface IError {
+  id: string
+  text: string
+}

@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from '@/router'
 import api from '@/axios'
 import { useErrorStore } from '@/store/error'
+import { v4 as uuidv4 } from 'uuid'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -20,7 +21,10 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    errorStore.addErrorMsg(error.response?.data?.message || 'Some error occurred')
+    errorStore.addErrorMsg({
+      id: uuidv4(),
+      text: error.response?.data?.message || 'Some error occurred',
+    })
     return Promise.reject(null)
   },
 )

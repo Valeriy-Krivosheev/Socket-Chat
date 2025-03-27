@@ -32,7 +32,7 @@ export const useUserStore = defineStore('user', () => {
       isAuthenticated.value = true
     } catch (error) {
       console.error('Error checking auth:', error)
-      // localStorage.removeItem('chat-token')
+      localStorage.removeItem('chat-token')
       isAuthenticated.value = false
     }
   }

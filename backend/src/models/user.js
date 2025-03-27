@@ -34,3 +34,8 @@ export const findUserById = async (userId) => {
 export const comparePassword = async (password, hashedPassword) => {
   return await bcrypt.compare(password, hashedPassword);
 };
+export const saveRefreshToken = async (token) => {};
+
+export const deleteRefreshToken = async (token) => {};
+
+export const findUserByToken = async (token) => {};
