@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { IUserCreated } from '@/type'
 import axios from '@/axios'
+import router from '@/router'
 
 export const useUserStore = defineStore('user', () => {
   const userStore = ref()
@@ -9,6 +10,7 @@ export const useUserStore = defineStore('user', () => {
   const userToken = ref(localStorage.getItem('chat-token') || '')
   const token = computed(() => userToken.value)
   const isAuthenticated = ref(false)
+  const loading = ref(false)
 
   const setUser = (data: IUserCreated) => {
     userStore.value = data
@@ -20,9 +22,10 @@ export const useUserStore = defineStore('user', () => {
   const checkAuth = async () => {
     if (!token.value) {
       isAuthenticated.value = false
-      return
+      await router.push({ name: 'auth' })
     }
     try {
+      loading.value = true
       const response = await axios.get('auth/me', {
         headers: {
           Authorization: `Bearer ${token.value}`,
@@ -31,11 +34,13 @@ export const useUserStore = defineStore('user', () => {
       setUser(response.data.user)
       isAuthenticated.value = true
     } catch (error) {
-      console.error('Error checking auth:', error)
       localStorage.removeItem('chat-token')
       isAuthenticated.value = false
+      await router.push({ name: 'auth' })
+    } finally {
+      loading.value = false
     }
   }
 
-  return { userStore, user, setToken, token, checkAuth, isAuthenticated }
+  return { userStore, user, setToken, token, checkAuth, isAuthenticated, loading }
 })

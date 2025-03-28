@@ -40,7 +40,6 @@ router.post("/login", async (req, res) => {
     const { accessToken, refreshToken } = generateTokens(
       user._id.toLocaleString(),
     );
-
     res.json({ accessToken, refreshToken });
   } catch (err) {
     res.status(500).json({ message: "Error logging user", err });

@@ -18,7 +18,7 @@ const onAuth = async (data: IFormDataReg) => {
     username: data.login,
     password: data.password,
   })
-  store.setToken(response.data.token)
+  store.setToken(response.data.accessToken)
   await router.push({ name: 'home' })
 }
 </script>
