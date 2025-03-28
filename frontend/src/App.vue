@@ -1,5 +1,17 @@
+<template>
+  <div class="h-full bg-gray-50 dark:bg-gray-700 flex flex-col relative">
+    <ErrorToast />
+    <main
+      class="flex flex-col items-center justify-center flex-1 relative bg-gray-100 dark:bg-gray-800 h-full"
+    >
+      <router-view />
+    </main>
+
+    <Footer />
+  </div>
+</template>
 <script setup lang="ts">
-import Footer from '@/components/Footer.vue'
+import Footer from '@/components/TheFooter.vue'
 import ErrorToast from '@/components/ErrorToast.vue'
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
@@ -12,16 +24,4 @@ onMounted(async () => {
   await store.checkAuth()
 })
 </script>
-
-<template>
-  <div class="h-full bg-gray-50 dark:bg-gray-700 flex flex-col">
-    <ErrorToast />
-    <main class="flex flex-col items-center justify-center flex-1 relative">
-      <router-view />
-    </main>
-
-    <Footer />
-  </div>
-</template>
-
 <style scoped></style>

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="sendMessage">
+  <form class="w-full absolute bottom-0 bg-gray-100 dark:bg-gray-800" @submit.prevent="sendMessage">
     <div class="flex items-center px-3 py-2 rounded-lg">
       <textarea
         v-model="newMessage"

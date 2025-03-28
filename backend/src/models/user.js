@@ -34,8 +34,16 @@ export const findUserById = async (userId) => {
 export const comparePassword = async (password, hashedPassword) => {
   return await bcrypt.compare(password, hashedPassword);
 };
-export const saveRefreshToken = async (token) => {};
-
-export const deleteRefreshToken = async (token) => {};
-
-export const findUserByToken = async (token) => {};
+// export const saveRefreshToken = async (token) => {
+//   const tokens = await dbConnent(
+//     process.env.MONGO_DB_TOKENS,
+//     "vChat-auth",
+//     "token",
+//   );
+//   await tokens.insertOne(token);
+//   return token;
+// };
+//
+// export const deleteRefreshToken = async (token) => {};
+//
+// export const findUserByToken = async (token) => {};

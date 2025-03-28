@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit" class="mx-auto bg-blue-100 p-10 rounded-lg">
+  <form @submit.prevent="onSubmit" class="mx-auto bg-blue-100 p-10 rounded-lg dark:bg-gray-600">
     <div class="mb-5">
       <label for="login" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >Your nickname</label

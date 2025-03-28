@@ -5,20 +5,17 @@ const generateTokens = (userId) => {
     const accessToken = jwt.sign(
       { userId: userId },
       process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: "10h",
-      },
     );
-    const refreshToken = jwt.sign(
-      { userId: userId },
-      process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: "7d",
-      },
-    );
+    // const refreshToken = jwt.sign(
+    //   { userId: userId },
+    //   process.env.JWT_SECRET_KEY,
+    //   {
+    //     expiresIn: "7d",
+    //   },
+    // );
     return {
       accessToken,
-      refreshToken,
+      // refreshToken,
     };
   } catch (err) {
     console.log(err);

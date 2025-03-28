@@ -5,12 +5,8 @@ import {
   comparePassword,
   findUserByName,
   findUserById,
-  saveRefreshToken,
-  deleteRefreshToken,
-  findUserByToken,
 } from "../../src/models/user.js";
 import { authMiddleware } from "../../src/middleware/auth.js";
-import jwt from "jsonwebtoken";
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -57,37 +53,37 @@ router.get("/me", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Error logging user", err });
   }
 });
-router.post("/logout", authMiddleware, async (req, res) => {
-  try {
-    await deleteRefreshToken(req.body.refreshToken);
-    res.json({ message: "Logged out successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Error logging out", err });
-  }
-});
+// router.post("/logout", authMiddleware, async (req, res) => {
+//   try {
+//     await deleteRefreshToken(req.body.refreshToken);
+//     res.json({ message: "Logged out successfully" });
+//   } catch (err) {
+//     res.status(500).json({ message: "Error logging out", err });
+//   }
+// });
 
-router.post("/refresh", async (req, res) => {
-  try {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
-      return res.status(401).json({ message: "Refresh token not found" });
-    }
-
-    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
-    const user = await findUserByToken(decoded.userId, refreshToken);
-    if (!user) {
-      return res.status(403).json({ message: "Invalid refresh token" });
-    }
-    const { accessToken, refreshToken: newRefreshToken } = generateTokens(
-      user._id.toLocaleString(),
-    );
-
-    await deleteRefreshToken(refreshToken);
-    await saveRefreshToken(newRefreshToken);
-    res.json({ accessToken, refreshToken: newRefreshToken });
-  } catch (err) {
-    res.status(500).json({ message: "Error logging user", err });
-  }
-});
+// router.post("/refresh", async (req, res) => {
+//   try {
+//     const { refreshToken } = req.body;
+//     if (!refreshToken) {
+//       return res.status(401).json({ message: "Refresh token not found" });
+//     }
+//
+//     const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
+//     const user = await findUserByToken(decoded.userId, refreshToken);
+//     if (!user) {
+//       return res.status(403).json({ message: "Invalid refresh token" });
+//     }
+//     const { accessToken, refreshToken: newRefreshToken } = generateTokens(
+//       user._id.toLocaleString(),
+//     );
+//
+//     await deleteRefreshToken(refreshToken);
+//     await saveRefreshToken(newRefreshToken);
+//     res.json({ accessToken, refreshToken: newRefreshToken });
+//   } catch (err) {
+//     res.status(500).json({ message: "Error logging user", err });
+//   }
+// });
 
 export default router;
