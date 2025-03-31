@@ -5,7 +5,7 @@
       <div :class="messageTextClasses">
         <div :class="userNameWrapClasses">
           <span class="text-sm font-semibold text-gray-900 dark:text-white">{{
-            userName(message.user.name)
+            userName(message.user.username)
           }}</span>
         </div>
         <div :class="textWrapperClasses">
@@ -41,7 +41,7 @@ const props = defineProps({
 const { localDateWithoutMs } = useTime()
 
 const isCurrentUser = computed(() => {
-  return props.message.user.id === user.value?.id
+  return props.message.user._id === user.value?._id
 })
 
 const userName = (name: string) => (isCurrentUser.value ? 'You' : name)

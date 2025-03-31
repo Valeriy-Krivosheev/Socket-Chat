@@ -67,5 +67,3 @@ onUpdated(() => {
   scrollToBottom(chatContainer)
 })
 </script>
-
-<style scoped></style>

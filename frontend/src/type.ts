@@ -8,7 +8,7 @@ export interface IMessage {
 }
 
 export interface IUserCreated {
-  id: string
+  _id: string
   username: string
   password: string
   timeEntering: number
