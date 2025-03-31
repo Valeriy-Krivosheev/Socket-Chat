@@ -8,9 +8,7 @@
             userName(message.user.name)
           }}</span>
         </div>
-        <div
-          class="leading-1.5 p-3 border-gray-200 bg-blue-100 rounded-e-xl rounded-es-xl dark:bg-gray-700 w-fit min-w-20"
-        >
+        <div :class="textWrapperClasses">
           <p class="text-sm font-normal text-gray-900 dark:text-white">
             {{ message.content.text }}
           </p>
@@ -65,6 +63,15 @@ const userNameWrapClasses = computed(() => {
 const messageTextClasses = computed(() => {
   const defaultClasses = 'flex flex-col gap-1 w-full max-w-8/10'
   return twMerge(defaultClasses, isCurrentUser.value ? 'items-end' : 'items-start')
+})
+
+const textWrapperClasses = computed(() => {
+  const defaultClasses =
+    'leading-1.5 p-3 border-gray-200 bg-blue-100  dark:bg-gray-700 w-fit min-w-20'
+  return twMerge(
+    defaultClasses,
+    isCurrentUser.value ? 'rounded-l-lg rounded-b-lg' : 'rounded-e-lg rounded-es-lg',
+  )
 })
 </script>
 

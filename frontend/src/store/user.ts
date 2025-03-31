@@ -10,7 +10,7 @@ export const useUserStore = defineStore('user', () => {
   const userToken = ref(localStorage.getItem('chat-token') || '')
   const token = computed(() => userToken.value)
   const isAuthenticated = ref(false)
-  const loading = ref(false)
+  const isProfileLoading = ref(false)
 
   const setUser = (data: IUserCreated) => {
     userStore.value = data
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', () => {
       await router.push({ name: 'auth' })
     }
     try {
-      loading.value = true
+      isProfileLoading.value = true
       const response = await axios.get('auth/me', {
         headers: {
           Authorization: `Bearer ${token.value}`,
@@ -38,9 +38,9 @@ export const useUserStore = defineStore('user', () => {
       isAuthenticated.value = false
       await router.push({ name: 'auth' })
     } finally {
-      loading.value = false
+      isProfileLoading.value = false
     }
   }
 
-  return { userStore, user, setToken, token, checkAuth, isAuthenticated, loading }
+  return { userStore, user, setToken, token, checkAuth, isAuthenticated, isProfileLoading }
 })

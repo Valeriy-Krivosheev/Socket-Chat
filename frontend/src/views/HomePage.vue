@@ -1,8 +1,8 @@
 <template>
-  <Loading v-if="loading" />
+  <Loading v-if="isProfileLoading" />
   <div
     class="lg:max-w-[800px] lg:min-w-2/5 max-w-none w-full mx-auto rounded-lg flex flex-col lg:px-4 relative pb-10 h-full"
-    v-if="user && !loading"
+    v-if="user && !isProfileLoading"
   >
     <Header :user="user" />
     <h1 class="text-center text-2xl font-bold mb-4 dark:text-white">MyChat</h1>
@@ -11,7 +11,8 @@
       ref="chatContainer"
       class="h-150 max-h-[calc(100vh-6.25rem)] overflow-auto flex-1 flex flex-col"
     >
-      <div v-if="messages?.length" class="p-2 flex-1">
+      <Loading v-if="isMessageLoading && !messages?.length" />
+      <div v-else class="p-2 flex-1">
         <ChatMessageItem v-for="(message, i) in messages" :message="message" :key="i" />
       </div>
       <ChatForm @sendMessage="messageSend" />
@@ -36,8 +37,8 @@ const socket = io('http://localhost:5000')
 
 const userStore = useUserStore()
 const messageStore = useMessageStore()
-const { user, loading } = storeToRefs(userStore)
-const { messages } = storeToRefs(messageStore)
+const { user, isProfileLoading } = storeToRefs(userStore)
+const { messages, isMessageLoading } = storeToRefs(messageStore)
 
 const messageSend = async (msg: IMessage) => {
   socket.emit('sendMessage', msg)

@@ -5,9 +5,12 @@ import type { IMessage } from '@/type'
 
 export const useMessageStore = defineStore('messages', () => {
   const messages: Ref<IMessage[]> = ref([])
+  const isMessageLoading = ref(false)
   const getMessages = async () => {
+    isMessageLoading.value = true
     const response = await axios.get('messages')
     messages.value = response.data
+    isMessageLoading.value = false
   }
 
   const postMessages = async (msg: IMessage) => {
@@ -23,5 +26,6 @@ export const useMessageStore = defineStore('messages', () => {
     getMessages,
     postMessages,
     addMessage,
+    isMessageLoading,
   }
 })
