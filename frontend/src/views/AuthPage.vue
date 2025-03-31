@@ -1,6 +1,6 @@
 <template>
   <div class="min-w-2/6">
-    <h2 class="text-2xl my-3 text-center">Log in to your account</h2>
+    <h2 class="text-4xl my-10 text-center">Log in to your account</h2>
     <auth-register-form @on-submit="onAuth" type="auth" />
   </div>
 </template>

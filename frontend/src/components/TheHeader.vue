@@ -1,14 +1,5 @@
 <template>
   <header class="flex justify-between py-3 px-2" v-if="user">
-    <div>
-      <div class="font-medium dark:text-white flex justify-start items-center">
-        <img class="w-8 h-8 rounded-full mr-2" src="/img/ava.jpeg" alt="" />
-        <div class="text-sm">{{ user.username }}</div>
-      </div>
-      <div class="text-xs text-gray-500 dark:text-gray-400">
-        Joined {{ localDateWithoutMs(user.timeEntering) }}
-      </div>
-    </div>
     <button
       id="theme-toggle"
       type="button"
@@ -40,13 +31,25 @@
         ></path>
       </svg>
     </button>
+    <div>
+      <div class="font-medium dark:text-white flex justify-start items-center mb-1">
+        <img class="w-8 h-8 rounded-full mr-2" src="/img/ava.jpeg" alt="" />
+        <div class="text-sm mr-2">{{ user.username }}</div>
+        <ProfileDropdown />
+      </div>
+      <div class="text-xs text-gray-500 dark:text-gray-400">
+        Joined {{ localDateWithoutMs(user.timeEntering) }}
+      </div>
+    </div>
   </header>
 </template>
 
 <script setup lang="ts">
+import ProfileDropdown from '@/components/ProfileDropdown.vue'
 import { onMounted, PropType, ref } from 'vue'
 import type { IUserCreated } from '@/type'
 import useTime from '@/composables/useTime'
+
 const { localDateWithoutMs } = useTime()
 defineProps({
   user: {
