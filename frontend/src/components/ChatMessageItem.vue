@@ -44,7 +44,7 @@ const isCurrentUser = computed(() => {
   return props.message.user._id === user.value?._id
 })
 
-const userName = (name: string) => (isCurrentUser.value ? 'You' : name)
+const userName = (name: string) => (isCurrentUser.value ? 'You' : name || '<Nickname>')
 
 const messageWrapClasses = computed(() => {
   const defaultClasses = 'flex items-start gap-2.5 mb-4'
